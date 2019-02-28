@@ -15,7 +15,7 @@ def parse_image(images):
         number = int(tokens[1])
         tags =  tokens[2:]
         assert number == len(tags)
-        parsed_images.append({'id':i, 'type':_type_, 'tags':tags})
+        parsed_images.append([i,_type_,tags])
     return parsed_images
 
 ### Example ###
@@ -29,9 +29,9 @@ print('we have %d images'%n_images)
 #parse the images  
 parsed_images = parse_image(images)
 
-print('id: ', parsed_images[0]['id'])
-print('type: '+parsed_images[0]['type'])
-print(parsed_images[0]['tags'])
+print('id: ', parsed_images[0][0])
+print('type: '+parsed_images[0][1])
+print(parsed_images[0][2])
 
 
 
