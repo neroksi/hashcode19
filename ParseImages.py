@@ -8,6 +8,15 @@ def get_content(filename):
     return n_images, images
 
 def parse_image(images):
+    """
+    outputs a list of lists
+    below is an example
+    [[0, 'H', ['cat', 'beach', 'sun']],
+     [1, 'V', ['selfie', 'smile']],
+     [2, 'V', ['garden', 'selfie']],
+     [3, 'H', ['garden', 'cat']]]
+    
+    """
     parsed_images = []
     for i, image in enumerate(images):
         tokens = image.split(' ')
@@ -18,20 +27,6 @@ def parse_image(images):
         parsed_images.append([i,_type_,tags])
     return parsed_images
 
-### Example ###
-#filename    
-filename = 'b_lovely_landscapes.txt'
-
-# Load the images
-n_images, images = get_content(filename)
-print('we have %d images'%n_images)  
-
-#parse the images  
-parsed_images = parse_image(images)
-
-print('id: ', parsed_images[0][0])
-print('type: '+parsed_images[0][1])
-print(parsed_images[0][2])
 
 
 
