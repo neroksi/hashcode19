@@ -41,8 +41,7 @@ def h_to_v2(imgs):
     k = idH
     L = []
     o = np.random.choice(idV, idV, False)
-    for i,j in enumerate(o) :
-        if i != j:
+    for i,j in zip(o[1:], o[:-1]) :
             img1 = imVs[i]
             img2 = imVs[j]
             img = merge_vertical(img1, img2)
