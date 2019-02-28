@@ -26,14 +26,14 @@ def calcul_order_permute(list_of_images):
     [3, "H", ["chat", "garden"]
     :return:  list_of_slides = [1, (2,5), 3]
     """
+    order_slides = []
 
     score = score_slide(list_of_images[0][2], list_of_images[1][2])
     print("score:" + str(score))
-    order_slides = []
-    order_slides.append(list_of_images[0][0])
-    order_slides.append(list_of_images[1][0])
-    order_slides.append(list_of_images[2][0])
-    return(order_slides)
+    for x in list_of_images:
+        order_slides.append(x[0])  # Add the id.
+
+    return order_slides
 
 
 def merge_vertical(slide_h_1, slide_h_2):
