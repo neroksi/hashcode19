@@ -54,6 +54,9 @@ def output_file(list_of_slides):
         else:  # If this is a tuple
             a, b = x
             file.write(str(a) + ' ' + str(b) + '\n')
+            
+def solver(nH, nV):
+    return [imVs[0], imHs[0] + imHs[nH -1], imHs[nV-1] ]
 
 if __name__ == '__main__':
     main()
