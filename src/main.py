@@ -17,6 +17,25 @@ def main():
     # output_file(list_of_slides)
 
 
+def calcul_order_permute(list_of_images):
+    """
+    Calculate the order and then give back the order of slides.
+    We suppose there are only horizontal images.
+
+    :param list_of_images:  [[1, "H", ["cat", "field"], [(2,5) , "H", ["cat", "garden"]],
+    [3, "H", ["chat", "garden"]
+    :return:  list_of_slides = [1, (2,5), 3]
+    """
+
+    score = score_slide(list_of_images[0][2], list_of_images[1][2])
+    print("score:" + str(score))
+    order_slides = []
+    order_slides.append(list_of_images[0][0])
+    order_slides.append(list_of_images[1][0])
+    order_slides.append(list_of_images[2][0])
+    return(order_slides)
+
+
 def merge_vertical(slide_h_1, slide_h_2):
     """Merge in the case of two verticals:
     [1, "V", ["cat", "garden"]]
