@@ -1,20 +1,50 @@
 # Main file
+import numpy as np
+import random
 
 
 def main():
-    file = open("../dataset/a_example.txt")
 
-    content = file.read().splitlines()
-    lines = [line.rstrip('\n') for line in file]
+    n_images, images = get_content("../dataset/a_example.txt")
+    list_of_images = parse_image(images)
+    #print(list_of_images)
+    list_of_images_horizontal = parse_to_horizontal(list_of_images)
+    #print(list_of_images_horizontal)
 
-    slide_1 = ["garden", "cat"]
-    slide_2 = ["selfie", "smile", "garden"]
-    s = score_slide(slide_1, slide_2)
-    print(s)
-    
-    # Output the file according to Google format
-    # list_of_slides = [0, (1, 2), 5]
-    # output_file(list_of_slides)
+    test = calcul_order_permute(list_of_images_horizontal)
+    #print(test)
+    output_file(test)
+
+
+def get_content(filename):
+    with open(filename, mode='r') as file:
+        content = file.read()
+        sequences = content.split('\n')
+    n_images = int(sequences[0])
+    images = sequences[1:-1]
+    assert n_images == len(images)
+    return n_images, images
+
+
+def parse_image(images):
+    """
+    outputs a list of lists
+    below is an example
+    [[0, 'H', ['cat', 'beach', 'sun']],
+     [1, 'V', ['selfie', 'smile']],
+     [2, 'V', ['garden', 'selfie']],
+     [3, 'H', ['garden', 'cat']]]
+
+    """
+    parsed_images = []
+    for i, image in enumerate(images):
+        tokens = image.split(' ')
+        _type_ = tokens[0]
+        number = int(tokens[1])
+        tags = tokens[2:]
+        assert number == len(tags)
+        parsed_images.append([i, _type_, tags])
+    return parsed_images
 
 
 def calcul_order_permute(list_of_images):
@@ -29,19 +59,35 @@ def calcul_order_permute(list_of_images):
     order_slides = []
 
     score = score_slide(list_of_images[0][2], list_of_images[1][2])
-    print("score:" + str(score))
+    #print("score:" + str(score))
     for x in list_of_images:
         order_slides.append(x[0])  # Add the id.
 
+    random.shuffle(order_slides)
+
+    print(order_slides)
     return order_slides
+
+
+def parse_to_horizontal(list_of_images):
+    """
+    Get the list of images.
+    :param list_of_images: [[
+    :return:
+    """
+    list_of_horizontal = []
+    for x in list_of_images:
+        if x[1] == 'H':  # If this is vertical
+            list_of_horizontal.append(x)
+    return list_of_horizontal
 
 
 def merge_vertical(slide_h_1, slide_h_2):
     """Merge in the case of two verticals:
-    [1, "V", ["cat", "garden"]]
-    [5, "V", ["garden", "dog"]]
+    [1, V, ["cat", "garden"]]
+    [5, V, ["garden", "dog"]]
 
-    Output:  [(1, 5), "H", ["cat", "garden", "dog"]]
+    Output:  [(1, 5), H, ["cat", "garden", "dog"]]
     """
     a = (slide_h_1[0], slide_h_2[0])  # Tuple of the id
     merge_tags = list(set(slide_h_1[2] + slide_h_2[2]))
@@ -60,11 +106,10 @@ def score_slide(slide_1, slide_2):
     min_score = min(number_common, min(number_diff_right, number_diff_left))
     return min_score
 
+
 def output_file(list_of_slides):
-    """Output the file.
-    Format ex:  list_of_slides = [0, (1, 2), 5]
-    """
-    file = open("../dataset/output.txt", 'w')
+    """Output the file."""
+    file = open("../dataset/output_b.txt", 'w')
     n = len(list_of_slides)
     file.write(str(n) + '\n')  # Write the number of slides
     for x in list_of_slides:
@@ -73,9 +118,7 @@ def output_file(list_of_slides):
         else:  # If this is a tuple
             a, b = x
             file.write(str(a) + ' ' + str(b) + '\n')
-            
-def solver(nH, nV):
-    return [imVs[0], imHs[0] + imHs[nH -1], imHs[nV-1] ]
+
 
 if __name__ == '__main__':
     main()
