@@ -27,7 +27,14 @@ def parse_image(images):
         parsed_images.append([i,_type_,tags])
     return parsed_images
 
-
+def get_parsed_images(filename):
+    """
+    input : filename or file path  
+    output : list of lists (parsed images)
+    """
+    n_images, images = get_content(filename)
+    parsed_images = parse_image(images)
+    return parsed_images
 
 
 
