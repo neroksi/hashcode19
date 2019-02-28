@@ -1,4 +1,4 @@
-def h_to_v(imgs):
+def h_to_v(imgs, Vmax = 5):
     imVs = []
     imHs = []
     for  img in imgs :
@@ -11,9 +11,11 @@ def h_to_v(imgs):
     idH = len(imHs)
     idV = len(imVs)
 
+    k = idH
     L = []
     for i in range(idV):
-        for j in range(idV):
+        l = np.random.choice(idV, Vmax, True)
+        for j in l :
             if i != j :
                 img1 = imVs[i]
                 img2 = imVs[j]
