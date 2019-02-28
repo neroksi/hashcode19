@@ -5,15 +5,41 @@ import random
 
 def main():
 
-    n_images, images = get_content("../dataset/a_example.txt")
+    n_images, images = get_content("../dataset/d_pet_pictures.txt")
     list_of_images = parse_image(images)
     #print(list_of_images)
-    list_of_images_horizontal = parse_to_horizontal(list_of_images)
+    list_of_images_horizontal = h_to_v2(list_of_images)
     #print(list_of_images_horizontal)
 
     test = calcul_order_permute(list_of_images_horizontal)
     #print(test)
     output_file(test)
+    return 0
+
+
+def h_to_v2(imgs):
+    imVs = []
+    imHs = []
+    for img in imgs:
+        img = img.copy()
+        if img[1] == "V":
+            imVs.append(img)
+        else:
+            imHs.append(img)
+
+    idH = len(imHs)
+    idV = len(imVs)
+
+    k = idH
+    L = []
+    o = np.random.choice(idV, idV, False)
+
+    for i, j in zip(o[:int(idV / 2)], o[int(idV / 2):]):
+        img1 = imVs[i]
+        img2 = imVs[j]
+        img = merge_vertical(img1, img2)
+        L.append(img)
+    return imHs + L
 
 
 def get_content(filename):
@@ -59,14 +85,31 @@ def calcul_order_permute(list_of_images):
     order_slides = []
 
     score = score_slide(list_of_images[0][2], list_of_images[1][2])
-    #print("score:" + str(score))
+    print("score:" + str(score))
+
+
     for x in list_of_images:
         order_slides.append(x[0])  # Add the id.
 
     random.shuffle(order_slides)
 
-    print(order_slides)
+    order_slides = list(set(order_slides))
     return order_slides
+
+
+def parse_to_horizontal_2(list_of_images):
+    """
+
+    :param list_of_images:
+    :return:
+    """
+
+    list_of_horizontal = []
+    it = iter(list_of_images)
+    for x in it:
+        list_of_horizontal.append(merge_vertical(x, next(it)))
+
+    return list_of_horizontal
 
 
 def parse_to_horizontal(list_of_images):
@@ -109,7 +152,7 @@ def score_slide(slide_1, slide_2):
 
 def output_file(list_of_slides):
     """Output the file."""
-    file = open("../dataset/output_b.txt", 'w')
+    file = open("../dataset/output_d.txt", 'w')
     n = len(list_of_slides)
     file.write(str(n) + '\n')  # Write the number of slides
     for x in list_of_slides:
