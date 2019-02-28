@@ -11,7 +11,6 @@ def h_to_v(imgs):
     idH = len(imHs)
     idV = len(imVs)
 
-    k = idH
     L = []
     for i in range(idV):
         for j in range(idV):
