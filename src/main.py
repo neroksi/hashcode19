@@ -11,6 +11,10 @@ def main():
     slide_2 = ["selfie", "smile", "garden"]
     s = score_slide(slide_1, slide_2)
     print(s)
+    
+    # Output the file according to Google format
+    # list_of_slides = [0, (1, 2), 5]
+    # output_file(list_of_slides)
 
 
 def score_slide(slide_1, slide_2):
