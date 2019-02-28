@@ -24,6 +24,19 @@ def score_slide(slide_1, slide_2):
     min_score = min(number_common, min(number_diff_right, number_diff_left))
     return min_score
 
+def output_file(list_of_slides):
+    """Output the file.
+    Format ex:  list_of_slides = [0, (1, 2), 5]
+    """
+    file = open("../dataset/output.txt", 'w')
+    n = len(list_of_slides)
+    file.write(str(n) + '\n')  # Write the number of slides
+    for x in list_of_slides:
+        if isinstance(x, int):  # If this is int (i.e horizontal)
+            file.write(str(x) + '\n')
+        else:  # If this is a tuple
+            a, b = x
+            file.write(str(a) + ' ' + str(b) + '\n')
 
 if __name__ == '__main__':
     main()
