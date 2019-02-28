@@ -17,6 +17,19 @@ def main():
     # output_file(list_of_slides)
 
 
+def merge_vertical(slide_h_1, slide_h_2):
+    """Merge in the case of two verticals:
+    [1, "V", ["cat", "garden"]]
+    [5, "V", ["garden", "dog"]]
+
+    Output:  [(1, 5), "H", ["cat", "garden", "dog"]]
+    """
+    a = (slide_h_1[0], slide_h_2[0])  # Tuple of the id
+    merge_tags = list(set(slide_h_1[2] + slide_h_2[2]))
+    image = [a, "H", merge_tags]
+    return image
+
+
 def score_slide(slide_1, slide_2):
     """Given both tags of slides, return the score.
         slide_1 = ["garden", "cat"]
